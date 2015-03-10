@@ -65,7 +65,7 @@ if len(argv) <= 2:
     print("Need to call with x and y from commandline")
 else:
     if argv[1].isdigit() and argv[2].isdigit():
-        motorPWM = mixXY(argv[1],argv[2])
+        motorPWM = mixXY(int(argv[1]), int(argv[2]))
         leftMotorPWM = motorPWM[0]
         rightMotorPWM = motorPWM[1]
         setMotorPWMS(leftMotorPWM, rightMotorPWM)
