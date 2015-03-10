@@ -43,6 +43,7 @@ def setMotorPWMS(leftMotor, rightMotor):
         motor2PWM.ChangeDutyCycle(leftMotor)
 
 
+GPIO.setwarnings(False)
 
 #setup
 GPIO.setmode(GPIO.BCM)
