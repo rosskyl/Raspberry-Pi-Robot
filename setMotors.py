@@ -26,35 +26,35 @@ def setMotorPWMS(leftMotor, rightMotor):
     if leftMotor == 0:
         print("left motor 0")
         GPIO.output(MOTOR_EN_1_PIN, 0)
-        motor1A.ChangeDutyCycle(0)
-        motor1B.ChangeDutyCycle(0)
+        motor1A.stop()
+        motor1B.stop()
     elif leftMotor < 0:
         print("left motor < 0")
         GPIO.output(MOTOR_EN_1_PIN, 1)
-        motor1A.ChangeDutyCycle(0)
+        motor1A.stop()
         motor1B.ChangeDutyCycle(abs(leftMotor))
     else:
         print("left motor else")
         GPIO.output(MOTOR_EN_1_PIN, 1)
         motor1A.ChangeDutyCycle(leftMotor)
-        motor1B.ChangeDutyCycle(0)
+        motor1B.stop()
 
     #right motor
     if rightMotor == 0:
         print("right motor 0")
         GPIO.output(MOTOR_EN_2_PIN, 0)
-        motor2A.ChangeDutyCycle(0)
-        motor2B.ChangeDutyCycle(0)
+        motor2A.stop()
+        motor2B.stop()
     elif rightMotor < 0:
         print("right motor < 0")
         GPIO.output(MOTOR_EN_2_PIN, 1)
-        motor2A.ChangeDutyCycle(0)
+        motor2A.stop()
         motor2B.ChangeDutyCycle(abs(rightMotor))
     else:
         print("right motor else")
         GPIO.output(MOTOR_EN_2_PIN, 1)
         motor2A.ChangeDutyCycle(rightMotor)
-        motor2B.ChangeDutyCycle(0)
+        motor2B.stop()
 
 
 
