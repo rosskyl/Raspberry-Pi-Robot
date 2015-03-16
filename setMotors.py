@@ -68,6 +68,8 @@ else:
         motorPWM = mixXY(int(argv[1]), int(argv[2]))
         leftMotorPWM = motorPWM[0]
         rightMotorPWM = motorPWM[1]
+        print("left motor:",leftMotorPWM)
+        print("right motor:", rightMotorPWM)
         setMotorPWMS(leftMotorPWM, rightMotorPWM)
     else:
         print("Need to call with x and y as integers")
