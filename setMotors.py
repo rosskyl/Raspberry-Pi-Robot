@@ -23,32 +23,33 @@ def mixXY(x, y):
 
 def setMotorPWMS(leftMotor, rightMotor):
     #left motor
-    if leftMotor < 0:
-        GPIO.output(MOTOR_B_1_PIN, 1)
-        GPIO.output(MOTOR_A_1_PIN, 0)
-        motor1PWM.ChangeDutyCycle(leftMotor)
-    elif leftMotor == 0:
-        GPIO.output(MOTOR_B_1_PIN, 0)
-        GPIO.output(MOTOR_A_1_PIN, 0)
-        motor1PWM.ChangeDutyCycle(0)
+    if leftMotor == 0:
+        GPIO.output(MOTOR_EN_1_PIN, 0)
+        motor1A.ChangeDutyCycle(0)
+        motor1B.ChangeDutyCycle(0)
+    elif leftMotor < 0:
+        GPIO.output(MOTOR_EN_1_PIN, 1)
+        motor1A.ChangeDutyCycle(0)
+        motor1B.ChangeDutyCycle(leftMotor)
     else:
-        GPIO.output(MOTOR_A_1_PIN, 1)
-        GPIO.output(MOTOR_B_1_PIN, 0)
-        motor1PWM.ChangeDutyCycle(leftMotor)
+        GPIO.output(MOTOR_EN_1_PIN, 1)
+        motor1A.ChangeDutyCycle(leftMotor)
+        motor1B.ChangeDutyCycle(0)
 
     #right motor
-    if rightMotor < 0:
-        GPIO.output(MOTOR_B_2_PIN, 1)
-        GPIO.output(MOTOR_A_2_PIN, 0)
-        motor2PWM.ChangeDutyCycle(leftMotor)
-    elif rightMotor == 0:
-        GPIO.output(MOTOR_B_2_PIN, 0)
-        GPIO.output(MOTOR_A_2_PIN, 0)
-        motor2PWM.ChangeDutyCycle(0)
+    if rightMotor == 0:
+        GPIO.output(MOTOR_EN_2_PIN, 0)
+        motor2A.ChangeDutyCycle(0)
+        motor2B.ChangeDutyCycle(0)
+    elif rightMotor < 0:
+        GPIO.output(MOTOR_EN_2_PIN, 1)
+        motor2A.ChangeDutyCycle(0)
+        motor2B.ChangeDutyCycle(rightMotor)
     else:
-        GPIO.output(MOTOR_A_2_PIN, 1)
-        GPIO.output(MOTOR_B_2_PIN, 0)
-        motor2PWM.ChangeDutyCycle(leftMotor)
+        GPIO.output(MOTOR_EN_2_PIN, 1)
+        motor2A.ChangeDutyCycle(rightMotor)
+        motor2B.ChangeDutyCycle(0)
+
 
 
 GPIO.setwarnings(False)
@@ -63,10 +64,14 @@ GPIO.setup(MOTOR_EN_2_PIN, GPIO.OUT)
 GPIO.setup(MOTOR_A_2_PIN, GPIO.OUT)
 GPIO.setup(MOTOR_B_2_PIN, GPIO.OUT)
 
-motor1PWM = GPIO.PWM(MOTOR_EN_1_PIN, 50)
-motor2PWM = GPIO.PWM(MOTOR_EN_2_PIN, 50)
-motor1PWM.start(0)
-motor2PWM.start(0)
+motor1A = GPIO.PWM(MOTOR_A_1_PIN, 50)
+motor1B = GPIO.PWM(MOTOR_B_1_PIN, 50)
+motor2A = GPIO.PWM(MOTOR_A_2_PIN, 50)
+motor2B = GPIO.PWM(MOTOR_B_2_PIN, 50)
+motor1A.start(0)
+motor1B.start(0)
+motor2A.start(0)
+motor2B.start(0)
 
 
 if len(argv) <= 2:
