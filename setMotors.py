@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from sys import argv
+from time import sleep
 
 MOTOR_EN_1_PIN = 14
 MOTOR_A_1_PIN = 15
