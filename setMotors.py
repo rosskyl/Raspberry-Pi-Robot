@@ -90,3 +90,5 @@ else:
     print("left motor:",leftMotorPWM)
     print("right motor:", rightMotorPWM)
     setMotorPWMS(leftMotorPWM, rightMotorPWM)
+    sleep(5)
+    print("done")
