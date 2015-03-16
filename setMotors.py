@@ -27,6 +27,10 @@ def setMotorPWMS(leftMotor, rightMotor):
         GPIO.output(MOTOR_B_1_PIN, 1)
         GPIO.output(MOTOR_A_1_PIN, 0)
         motor1PWM.ChangeDutyCycle(leftMotor)
+    elif leftMotor == 0:
+        GPIO.output(MOTOR_B_1_PIN, 0)
+        GPIO.output(MOTOR_A_1_PIN, 0)
+        motor1PWM.ChangeDutyCycle(0)
     else:
         GPIO.output(MOTOR_A_1_PIN, 1)
         GPIO.output(MOTOR_B_1_PIN, 0)
@@ -37,6 +41,10 @@ def setMotorPWMS(leftMotor, rightMotor):
         GPIO.output(MOTOR_B_2_PIN, 1)
         GPIO.output(MOTOR_A_2_PIN, 0)
         motor2PWM.ChangeDutyCycle(leftMotor)
+    elif rightMotor == 0:
+        GPIO.output(MOTOR_B_2_PIN, 0)
+        GPIO.output(MOTOR_A_2_PIN, 0)
+        motor2PWM.ChangeDutyCycle(0)
     else:
         GPIO.output(MOTOR_A_2_PIN, 1)
         GPIO.output(MOTOR_B_2_PIN, 0)
@@ -64,12 +72,9 @@ motor2PWM.start(0)
 if len(argv) <= 2:
     print("Need to call with x and y from commandline")
 else:
-    if argv[1].isdigit() and argv[2].isdigit():
-        motorPWM = mixXY(int(argv[1]), int(argv[2]))
-        leftMotorPWM = motorPWM[0]
-        rightMotorPWM = motorPWM[1]
-        print("left motor:",leftMotorPWM)
-        print("right motor:", rightMotorPWM)
-        setMotorPWMS(leftMotorPWM, rightMotorPWM)
-    else:
-        print("Need to call with x and y as integers")
+    motorPWM = mixXY(int(argv[1]), int(argv[2]))
+    leftMotorPWM = motorPWM[0]
+    rightMotorPWM = motorPWM[1]
+    print("left motor:",leftMotorPWM)
+    print("right motor:", rightMotorPWM)
+    setMotorPWMS(leftMotorPWM, rightMotorPWM)
