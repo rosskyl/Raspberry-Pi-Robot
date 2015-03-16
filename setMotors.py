@@ -72,7 +72,7 @@ motor2PWM.start(0)
 if len(argv) <= 2:
     print("Need to call with x and y from commandline")
 else:
-    motorPWM = mixXY(int(argv[1]), int(argv[2]))
+    motorPWM = mixXY(float(argv[1]), float(argv[2]))
     leftMotorPWM = motorPWM[0]
     rightMotorPWM = motorPWM[1]
     print("left motor:",leftMotorPWM)
