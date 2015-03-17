@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-from sys import argv
 from time import sleep
 
 MOTOR_EN_1_PIN = 14
@@ -84,12 +83,22 @@ motor2A.start(0)
 motor2B.start(0)
 
 
-if len(argv) <= 2:
-    print("Need to call with x and y from commandline")
-else:
-    motorPWM = mixXY(int(argv[1]), int(argv[2]))
+##if len(argv) <= 2:
+##    print("Need to call with x and y from commandline")
+##else:
+##    motorPWM = mixXY(int(argv[1]), int(argv[2]))
+##    leftMotorPWM = motorPWM[0]
+##    rightMotorPWM = motorPWM[1]
+##    setMotorPWMS(leftMotorPWM, rightMotorPWM)
+##    while True:
+##        pass
+
+
+while True:
+    file = open("values.txt", 'r')
+    values = file.readlines()[0].split()
+    file.close()
+    motorPWM = mixXY(int(values[1]), int(values[2]))
     leftMotorPWM = motorPWM[0]
     rightMotorPWM = motorPWM[1]
     setMotorPWMS(leftMotorPWM, rightMotorPWM)
-    while True:
-        pass
