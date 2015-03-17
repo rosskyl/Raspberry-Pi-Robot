@@ -98,7 +98,7 @@ while True:
     file = open("values.txt", 'r')
     values = file.readlines()[0].split()
     file.close()
-    motorPWM = mixXY(int(values[1]), int(values[2]))
+    motorPWM = mixXY(int(values[0]), int(values[1]))
     leftMotorPWM = motorPWM[0]
     rightMotorPWM = motorPWM[1]
     setMotorPWMS(leftMotorPWM, rightMotorPWM)
