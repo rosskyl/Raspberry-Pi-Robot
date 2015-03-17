@@ -24,35 +24,38 @@ def mixXY(x, y):
 
 def setMotorPWMS(leftMotor, rightMotor):
     #left motor
+    if leftMotor < -100:
+        leftMotor = -100
+    elif leftMotor > 100:
+        leftMotor = 100
+
     if leftMotor == 0:
-        print("left motor 0")
         GPIO.output(MOTOR_EN_1_PIN, 0)
         motor1A.stop()
         motor1B.stop()
     elif leftMotor < 0:
-        print("left motor < 0")
         GPIO.output(MOTOR_EN_1_PIN, 1)
         motor1A.stop()
         motor1B.ChangeDutyCycle(abs(leftMotor))
     else:
-        print("left motor else")
         GPIO.output(MOTOR_EN_1_PIN, 1)
         motor1A.ChangeDutyCycle(leftMotor)
         motor1B.stop()
 
     #right motor
+    if rightMotor < -100:
+        rightMotor = -100
+    elif rightMotor > 100:
+        rightMotor = 100
     if rightMotor == 0:
-        print("right motor 0")
         GPIO.output(MOTOR_EN_2_PIN, 0)
         motor2A.stop()
         motor2B.stop()
     elif rightMotor < 0:
-        print("right motor < 0")
         GPIO.output(MOTOR_EN_2_PIN, 1)
         motor2A.stop()
         motor2B.ChangeDutyCycle(abs(rightMotor))
     else:
-        print("right motor else")
         GPIO.output(MOTOR_EN_2_PIN, 1)
         motor2A.ChangeDutyCycle(rightMotor)
         motor2B.stop()
@@ -87,8 +90,6 @@ else:
     motorPWM = mixXY(int(argv[1]), int(argv[2]))
     leftMotorPWM = motorPWM[0]
     rightMotorPWM = motorPWM[1]
-    print("left motor:",leftMotorPWM)
-    print("right motor:", rightMotorPWM)
     setMotorPWMS(leftMotorPWM, rightMotorPWM)
-    sleep(5)
-    print("done")
+    while True:
+        pass
