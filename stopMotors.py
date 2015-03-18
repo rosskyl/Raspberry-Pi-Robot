@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 from time import sleep
-from os import stat
 
 MOTOR_EN_1_PIN = 14
 MOTOR_A_1_PIN = 15
@@ -85,45 +84,11 @@ motor2A.start(0)
 motor2B.start(0)
 
 
-if len(argv) <= 2:
-    print("Need to call with x and y from commandline")
-else:
-    motorPWM = mixXY(int(argv[1]), int(argv[2]))
-    leftMotorPWM = motorPWM[0]
-    rightMotorPWM = motorPWM[1]
-    setMotorPWMS(leftMotorPWM, rightMotorPWM)
-    while True:
-        pass
+GPIO.output(MOTOR_EN_1_PIN,0)
+GPIO.output(MOTOR_EN_2_PIN,0)
+motor1A.ChangeDutyCycle(0)
+motor1B.ChangeDutyCycle(0)
+motor2A.ChangeDutyCycle(0)
+motor2B.ChangeDutyCycle(0)
 
-
-##file = open("values.txt", 'r')
-##values = file.readlines()[0].split()
-##file.close()
-##time = stat("values.txt").st_mtime
-##file = open("values.txt", 'r')
-##values = file.readlines()[0].split()
-##file.close()
-##motorPWM = mixXY(int(values[0]), int(values[1]))
-##print(values)
-##print(stat("values.txt").st_mtime)
-##leftMotorPWM = motorPWM[0]
-##rightMotorPWM = motorPWM[1]
-##setMotorPWMS(leftMotorPWM, rightMotorPWM)
-##sleep(1)
-##while True:
-##    try:
-##        if time != stat("values.txt").st_mtime:
-##            print("changed")
-##            file = open("values.txt", 'r')
-##            values = file.readlines()[0].split()
-##            file.close()
-##            motorPWM = mixXY(int(values[0]), int(values[1]))
-##            print(values)
-##            print(stat("values.txt").st_mtime)
-##            leftMotorPWM = motorPWM[0]
-##            rightMotorPWM = motorPWM[1]
-##            setMotorPWMS(leftMotorPWM, rightMotorPWM)
-##            sleep(1)
-##
-##    except IndexError:
-##        pass
+sleep(1)
