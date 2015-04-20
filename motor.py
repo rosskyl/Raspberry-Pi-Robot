@@ -71,38 +71,23 @@ def motorsPWM():
 		motor2A.ChangeDutyCycle(i)
 		time.sleep(SMALL_WAIT)
 
-def motorsPWM2():
-    motor1PWM = GPIO.PWM(MOTOR_EN_1_PIN, 50)
-    motor2PWM = GPIO.PWM(MOTOR_EN_2_PIN, 50)
-    motor1PWM.start(0)
-    motor2PWM.start(0)
-
+	time.sleep(WAIT)
     #both motors rev up
-    GPIO.output(MOTOR_A_1_PIN, 1)
-    GPIO.output(MOTOR_A_2_PIN, 1)
-    for i in range(0, 100):
-        motor1PWM.ChangeDutyCycle(i)
-        motor2PWM.ChangeDutyCycle(i)
-        time.sleep(SMALL_WAIT)
+	for i in range(0,100):
+		motor1B.ChangeDutyCycle(i)
+		motor2B.ChangeDutyCycle(i)
+		time.sleep(SMALL_WAIT)
 
-    #rev motors down
-    GPIO.output(MOTOR_A_1_PIN, 1)
-    GPIO.output(MOTOR_A_2_PIN, 1)
-    for i in range(100, 0, -1):
-        motor1PWM.ChangeDutyCycle(i)
-        motor2PWM.ChangeDutyCycle(i)
-        time.sleep(SMALL_WAIT)
+	time.sleep(WAIT)
 
-def mixXY(x, y):
-	"""
-	mixes x and y from a joystick to values for a 2 motor drive system
-	input: x (int or float), y (int or float)
-	output: (leftMotor (float), rightMotor (float)) tuple
-	"""
-	leftMotor = y + x
-	rightMotor = y - x
+	#rev motors down
+	for i in range(100,0,-1):
+		motor1B.ChangeDutyCycle(i)
+		motor2B.ChangeDutyCycle(i)
+		time.sleep(SMALL_WAIT)
 
-	return (leftMotor, rightMotor)
+
+
 
 
 

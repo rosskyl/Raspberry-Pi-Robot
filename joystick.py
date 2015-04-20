@@ -2,7 +2,6 @@ import RPi.GPIO as GPIO
 import spidev
 import os
 from time import sleep
-from os import stat
 
 MOTOR_EN_1_PIN = 14
 MOTOR_A_1_PIN = 15
@@ -12,10 +11,13 @@ MOTOR_EN_2_PIN = 23
 MOTOR_A_2_PIN = 24
 MOTOR_B_2_PIN = 25
 
+LIGHT_PIN = 4
+
 JOYSTICK_X_CHANNEL = 0
 JOYSTICK_Y_CHANNEL = 1
 
 DELAY = .1
+
 
 
 def ReadChannel(channel):
@@ -45,38 +47,30 @@ def setMotorPWMS(leftMotor, rightMotor):
         leftMotor = -100
     elif leftMotor > 100:
         leftMotor = 100
-    print("left Motor: ", leftMotor)
     if leftMotor == 0:
-        GPIO.output(MOTOR_EN_1_PIN, 0)
-        motor1A.stop()
-        motor1B.stop()
+        motor1A.ChangeDutyCycle(0)
+        motor1B.ChangeDutyCycle(0)
     elif leftMotor < 0:
-        GPIO.output(MOTOR_EN_1_PIN, 1)
-        motor1A.stop()
+        motor1A.ChangeDutyCycle(0)
         motor1B.ChangeDutyCycle(abs(leftMotor))
     else:
-        GPIO.output(MOTOR_EN_1_PIN, 1)
+        motor1B.ChangeDutyCycle(0)
         motor1A.ChangeDutyCycle(leftMotor)
-        motor1B.stop()
 
     #right motor
     if rightMotor < -100:
         rightMotor = -100
     elif rightMotor > 100:
         rightMotor = 100
-    print("right motor: ", rightMotor)
     if rightMotor == 0:
-        GPIO.output(MOTOR_EN_2_PIN, 0)
-        motor2A.stop()
-        motor2B.stop()
+        motor2A.ChangeDutyCycle(0)
+        motor2B.ChangeDutyCycle(0)
     elif rightMotor < 0:
-        GPIO.output(MOTOR_EN_2_PIN, 1)
-        motor2A.stop()
+        motor2A.ChangeDutyCycle(0)
         motor2B.ChangeDutyCycle(abs(rightMotor))
     else:
-        GPIO.output(MOTOR_EN_2_PIN, 1)
+        motor2B.ChangeDutyCycle(0)
         motor2A.ChangeDutyCycle(rightMotor)
-        motor2B.stop()
 
 
 
@@ -93,6 +87,8 @@ GPIO.setup(MOTOR_EN_2_PIN, GPIO.OUT)
 GPIO.setup(MOTOR_A_2_PIN, GPIO.OUT)
 GPIO.setup(MOTOR_B_2_PIN, GPIO.OUT)
 
+GPIO.setup(LIGHT_PIN, GPIO.OUT)
+
 motor1A = GPIO.PWM(MOTOR_A_1_PIN, 50)
 motor1B = GPIO.PWM(MOTOR_B_1_PIN, 50)
 motor2A = GPIO.PWM(MOTOR_A_2_PIN, 50)
@@ -101,16 +97,26 @@ motor1A.start(0)
 motor1B.start(0)
 motor2A.start(0)
 motor2B.start(0)
+GPIO.output(MOTOR_EN_1_PIN, 1)
+GPIO.output(MOTOR_EN_2_PIN, 1)
 
 
-
-while True:
-    pass
+light = True
 
 try:
     while True:
         x = ReadChannel(JOYSTICK_X_CHANNEL)
         y = ReadChannel(JOYSTICK_Y_CHANNEL)
+        x = (x - 500) / 5
+        y = (y - 500) / 5
         setMotorPWMS(x,y)
+        if light:
+            GPIO.output(LIGHT_PIN, 1)
+            light = False
+        else:
+            GPIO.output(LIGHT_PIN, 0)
+            light = True
+        sleep(DELAY)
 except KeyboardInterrupt:
     GPIO.cleanup()
+    print("cleaned up")
